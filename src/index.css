@@ -1,13 +1,238 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Archivo";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #fff8ed;
+  color: #2d402a;
+}
+
+header {
+  margin: 2%;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+input {
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: #fff8ed;
+  text-decoration: none;
+  padding: 10px 40px;
+  border: 0;
+  border-radius: 8px;
+  border-color: #2d402a;
+  background-color: #465938;
+  margin: 15px;
+  font-size: 20px;
+  outline-color: transparent;
+}
+
+::placeholder {
+  color: #fff8ed;
+}
+
+.header {
+  padding: 4px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-self: center;
+  align-items: center;
+}
+
+.header-logo a {
+  color: #2d402a;
+  text-decoration: none;
+}
+
+.header-logo-text {
+  text-align: center;
+  font-size: 42px;
+  margin: 0 0 0 15px;
+  text-transform: uppercase;
+}
+
+.header-buttons {
+  display: flex;
+  align-self: center;
+}
+
+footer {
+  margin: 10% 0 0 0;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+}
+
+.join {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+.title {
+  font-size: 38px;
+  font-weight: 300;
+  text-decoration: underline;
+}
+
+button {
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: #2d402a;
+  text-decoration: none;
+  padding: 10px 40px;
+  border-radius: 8px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #2d402a;
+  background-color: #fff8ed;
+  margin: 0 15px 0 15px;
+  font-size: 20px;
+}
+
+button:hover {
+  color: #fff8ed;
+  background-color: #2d402a;
+}
+
+.register-button {
+  margin: 15px 0 0 0;
+}
+
+.register-button-asking {
+  margin: 30px 0 0 0;
+}
+
+.card-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.card-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+.login-container {
+  margin: 10% 0 0 0;
+  padding: 4px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.register-container {
+  margin: 10% 0 0 0;
+  padding: 4px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.main-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.main-image__img {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.title-smaller {
+  margin: 1%;
+  padding: 4px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-self: center;
+  align-items: center;
+}
+
+.title-smaller-text {
+  text-align: center;
+  font-size: 42px;
+  margin: 0 0 0 15px;
+  text-transform: uppercase;
+}
+
+.homepage-arrow {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.transition-shadow {
+  transition: box-shadow 0.3s ease;
+}
+
+.transition-colors {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.line-clamp-2 {
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+.eventList-container {
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+}
+.eventCard-container {
+  background-color: #465938;
+  border-radius: 8px;
+  width: 300px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.eventCard-image-container {
+  width: 100%;
+
+  height: 150px;
+  overflow: hidden;
+  opacity: 50%;
+}
+
+.eventCard-container-text {
+  margin: 1vh;
+}
+
+.link-details {
+  background-color: #fff8ed;
+}
+
+.eventCard-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
