@@ -37,7 +37,7 @@ const Header = () => {
                 onClick={() => navigate("/profile")}
                 className="bg-white text-blue-600"
               >
-                Mój profil {/* "My profile" in Polish */}
+                Mój profil
               </Button>
               <Button onClick={logout} className="bg-red-500 text-white">
                 Wyloguj {/* "Logout" in Polish */}

@@ -11,10 +11,16 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
 
   // handle user login
+
+  // Dodaj te pola do domyślnych danych użytkownika
   const login = (user) => {
     setIsAuthenticated(true);
-    // use provided user data or fallback to test data
-    setUserData(user || { name: "TestUser", email: "test@example.com" });
+    setUserData({
+      name: user.name || "Jan Kowalski",
+      email: user.email || "jan@example.com",
+      joinDate: new Date().toISOString(),
+      // ... inne pola
+    });
   };
 
   // handle user logout

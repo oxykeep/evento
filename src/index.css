@@ -236,3 +236,25 @@ button:hover {
   height: 100%;
   object-fit: cover;
 }
+
+/* Stylizacja karty profilu */
+.profile-card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Animacja przełączników preferencji */
+input[type="checkbox"] {
+  transition: all 0.2s ease;
+}
+
+/* Responsywność */
+@media (max-width: 640px) {
+  .preferences-grid {
+    grid-template-columns: 1fr;
+  }
+}
