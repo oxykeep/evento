@@ -40,7 +40,7 @@ const Header = () => {
                 Mój profil
               </Button>
               <Button onClick={logout} className="bg-red-500 text-white">
-                Wyloguj {/* "Logout" in Polish */}
+                Wyloguj
               </Button>
             </>
           ) : (
@@ -50,13 +50,13 @@ const Header = () => {
                 onClick={() => navigate("/login")}
                 className="bg-white text-blue-600"
               >
-                Logowanie {/* "Login" in Polish */}
+                Logowanie
               </Button>
               <Button
                 onClick={() => navigate("/register")}
                 className="bg-green-500 text-white"
               >
-                Rejestracja {/* "Register" in Polish */}
+                Rejestracja
               </Button>
             </>
           )}

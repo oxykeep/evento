@@ -207,8 +207,10 @@ button:hover {
 }
 .eventCard-container {
   background-color: #465938;
+  color: #fff8ed;
   border-radius: 8px;
   width: 300px;
+  padding-bottom: 3vh;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -229,6 +231,20 @@ button:hover {
 
 .link-details {
   background-color: #fff8ed;
+  border-radius: 8px;
+  padding: 1vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #465938;
+}
+
+.link-details:hover {
+  background-color: #2d402a;
+  color: #fff8ed;
 }
 
 .eventCard-image-container img {
@@ -247,14 +263,16 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* Animacja przełączników preferencji */
-input[type="checkbox"] {
-  transition: all 0.2s ease;
+.eventDetails-container {
+  display: flex;
+  justify-content: space-around;
 }
 
-/* Responsywność */
-@media (max-width: 640px) {
-  .preferences-grid {
-    grid-template-columns: 1fr;
-  }
+.eventDetails-container-description {
+  display: flex;
+  flex-direction: column;
+}
+
+span {
+  padding: 2vh 0 2vh 0;
 }

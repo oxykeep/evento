@@ -33,10 +33,10 @@ const EventCard = ({ event }) => {
         <p className="text-sm text-gray-500 mb-4">{event.location}</p>
 
         {/* Link to event details page */}
-        <Link to={`/events/${event.id}`} className="link-details">
-          Szczegóły {/* "Details" in Polish */}
-        </Link>
       </div>
+      <Link to={`/events/${event.id}`} className="link-details">
+        Szczegóły {/* "Details" in Polish */}
+      </Link>
     </div>
   );
 };
