@@ -20,6 +20,14 @@ const Header = () => {
 
         {/* navigation buttons container */}
         <nav className="header-buttons">
+          {isAuthenticated && (
+            <Button
+              onClick={() => navigate("/add-event")}
+              className="bg-green-600 text-white"
+            >
+              Dodaj wydarzenie
+            </Button>
+          )}
           {/* demo auth toggle button (for testing) */}
           <Button
             onClick={toggleAuth}

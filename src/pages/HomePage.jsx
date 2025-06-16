@@ -76,6 +76,19 @@ const HomePage = () => {
         {/* "Upcoming events" */}
         <EventsList events={mockEvents} />
       </section>
+      <div className="container mx-auto px-4 py-8">
+        {isAuthenticated && (
+          <div className="add-event-btn">
+            <Button
+              onClick={() => navigate("/add-event")}
+              className="bg-green-600 text-white"
+            >
+              + Dodaj nowe wydarzenie
+            </Button>
+          </div>
+        )}
+        {/* ... reszta kodu */}
+      </div>
     </div>
   );
 };

@@ -229,6 +229,10 @@ button:hover {
   margin: 1vh;
 }
 
+.eventCard-description {
+  height: 5vh;
+}
+
 .link-details {
   background-color: #fff8ed;
   border-radius: 8px;
@@ -275,4 +279,11 @@ button:hover {
 
 span {
   padding: 2vh 0 2vh 0;
+}
+
+.add-event-btn {
+  margin: 5vh;
+  display: flex;
+  justify-content: center;
+  align-self: center;
 }

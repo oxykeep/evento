@@ -27,7 +27,9 @@ const EventCard = ({ event }) => {
         </p>
 
         {/* Event description with line clamping (max 2 lines) */}
-        <p className="text-gray-700 mb-3 line-clamp-2">{event.description}</p>
+        <p className="eventCard-description text-gray-700 mb-3 line-clamp-2">
+          {event.description}
+        </p>
 
         {/* Event location */}
         <p className="text-sm text-gray-500 mb-4">{event.location}</p>
