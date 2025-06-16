@@ -29,7 +29,7 @@ const EventDetails = ({ events }) => {
           </div>
 
           {/* event image */}
-          <div className="main-image">
+          <div className="eventDetails-container-main-image">
             <img
               src={event.image}
               alt={event.title}
