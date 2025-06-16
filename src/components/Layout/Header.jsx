@@ -13,7 +13,7 @@ const Header = () => {
       <div className="header flex items-center justify-between px-4 py-3">
         {/* Logo */}
         <div className="header-logo text-xl font-bold">
-          <Link to="/" className="text-white">
+          <Link to="/" className="header-logo-text">
             EVENTOME
           </Link>
         </div>
