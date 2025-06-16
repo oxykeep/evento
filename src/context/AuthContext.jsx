@@ -1,46 +1,72 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 
-// create the authentication context
 const AuthContext = createContext();
 
-// provider component that wraps your app
 export const AuthProvider = ({ children }) => {
-  // track if user is logged in
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // store user data when logged in
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // handle user login
-
-  // Dodaj te pola do domyślnych danych użytkownika
-  const login = (user) => {
-    setIsAuthenticated(true);
-    setUserData({
-      name: user.name || "Jan Kowalski",
-      email: user.email || "jan@example.com",
-      joinDate: new Date().toISOString(),
-      // ... inne pola
+  const login = async (email, password) => {
+    const res = await fetch("/routes/api/auth.php?action=login", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
     });
-  };
 
-  // handle user logout
-  const logout = () => {
-    setIsAuthenticated(false);
-    setUserData(null); // clear user data
-  };
+    const data = await res.json();
 
-  // helper function to toggle auth state (useful for testing)
-  const toggleAuth = () => {
-    setIsAuthenticated((prev) => !prev);
-    // set test data when toggling on, clear when toggling off
-    if (!isAuthenticated) {
-      setUserData({ name: "TestUser", email: "test@example.com" });
+    if (data.status === "success") {
+      setIsAuthenticated(true);
+      setUserData(data.user);
+      return { success: true };
     } else {
-      setUserData(null);
+      return { success: false, message: data.message || "Błąd logowania" };
     }
   };
 
-  // provide all auth functions and state to children
+    const setAuth = (user) => {
+    setIsAuthenticated(true);
+    setUserData(user);
+  };
+
+  const logout = async () => {
+    await fetch("/routes/api/auth.php?action=logout", {
+      method: "GET",
+      credentials: "include",
+    });
+    setIsAuthenticated(false);
+    setUserData(null);
+  };
+
+  const fetchCurrentUser = async () => {
+    try {
+      const res = await fetch("/routes/api/auth.php?action=me", {
+        credentials: "include",
+      });
+      const data = await res.json();
+
+      if (data.status === "success" && data.user) {
+        setIsAuthenticated(true);
+        setUserData(data.user);
+      } else {
+        setIsAuthenticated(false);
+        setUserData(null);
+      }
+    } catch (err) {
+      console.error("Błąd podczas sprawdzania sesji:", err);
+      setIsAuthenticated(false);
+      setUserData(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCurrentUser();
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -48,7 +74,8 @@ export const AuthProvider = ({ children }) => {
         userData,
         login,
         logout,
-        toggleAuth, // include the toggle function
+        loading,
+        setAuth,
       }}
     >
       {children}
@@ -56,5 +83,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// custom hook for easy access to auth context
 export const useAuth = () => useContext(AuthContext);
