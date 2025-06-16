@@ -196,25 +196,42 @@ button:hover {
   overflow: hidden;
 }
 
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
 .grid {
   display: grid;
   gap: 1.5rem;
 }
 .eventList-container {
+  max-width: 1200px;
   height: auto;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  align-self: flex-end;
 }
 .eventCard-container {
   background-color: #465938;
   color: #fff8ed;
   border-radius: 8px;
-  width: 300px;
   padding-bottom: 3vh;
   height: auto;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+.event-card {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .eventCard-image-container {
@@ -265,6 +282,11 @@ button:hover {
 
 .profile-card:hover {
   transform: translateY(-2px);
+}
+
+.eventDetails-container-main-image {
+  display: flex;
+  justify-content: center;
 }
 
 .eventDetails-container {

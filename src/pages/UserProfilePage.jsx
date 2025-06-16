@@ -1,3 +1,4 @@
+// src/pages/UserProfilePage.jsx
 import { useAuth } from "../context/AuthContext";
 import Button from "../components/UI/Button";
 import { useState } from "react";
