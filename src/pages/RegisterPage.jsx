@@ -12,7 +12,7 @@ const RegisterPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    city: "", // dodajemy city, bo backend tego wymaga
+    city: "",
     password: "",
     confirmPassword: "",
   });
@@ -32,21 +32,20 @@ const RegisterPage = () => {
 
     const { name, email, city, password, confirmPassword } = formData;
 
-    // Prosta walidacja frontendowa
     if (!name || !email || !city || !password || !confirmPassword) {
-      return setError("Wszystkie pola są wymagane.");
+      setError("Wszystkie pola są wymagane.");
+      return;
     }
 
     if (password !== confirmPassword) {
-      return setError("Hasła się nie zgadzają.");
+      setError("Hasła się nie zgadzają.");
+      return;
     }
 
     try {
       const response = await fetch("/routes/api/auth.php?action=register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name,
           email,
@@ -59,7 +58,6 @@ const RegisterPage = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        // Obsługa błędów zwracanych przez backend
         if (data.errors) {
           setError(data.errors.join(" "));
         } else if (data.message) {
@@ -70,10 +68,10 @@ const RegisterPage = () => {
         return;
       }
 
-      // Jeśli rejestracja udana, logujemy użytkownika i przekierowujemy
-  setAuth(data.user);
-  navigate("/");
-    } catch (err) {
+      // Udana rejestracja — ustaw auth i przekieruj
+      setAuth(data.user);
+      navigate("/");
+    } catch {
       setError("Błąd sieci lub serwera.");
     }
   };
@@ -130,9 +128,7 @@ const RegisterPage = () => {
       <div className="mt-6 text-center">
         <p className="mb-2">Masz już konto?</p>
         <Link to="/login">
-          <Button className="w-full bg-blue-500 text-white py-2">
-            Zaloguj się
-          </Button>
+          <Button className="w-full bg-blue-500 text-white py-2">Zaloguj się</Button>
         </Link>
       </div>
     </div>

@@ -14,7 +14,7 @@ const SingleEventPage = () => {
     const fetchEvent = async () => {
       try {
         const response = await fetch(`/routes/api/event.php?id=${eventId}`);
-        if (!response.ok) throw new Error("Event not found");
+        if (!response.ok) throw new Error("Wydarzenie nie znalezione");
         const data = await response.json();
         setEvent(data);
       } catch (err) {

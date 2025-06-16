@@ -80,6 +80,15 @@ const LoginPage = () => {
           </Button>
         </Link>
       </div>
+
+      {/* Opcjonalnie możesz odkomentować i dodać obsługę odzyskiwania hasła */}
+      {/* 
+      <div className="mt-6 text-center">
+        <Button variant="text" className="text-blue-600">
+          Zapomniałeś hasła?
+        </Button>
+      </div>
+      */}
     </div>
   );
 };

@@ -10,13 +10,25 @@ const Header = () => {
 
   return (
     <header className="bg-blue-600 text-white shadow-md">
-      <div className="header">
-        <div className="header-logo">
-          <Link to="/" className="header-logo-text">
+      <div className="header flex items-center justify-between px-4 py-3">
+        {/* Logo */}
+        <div className="header-logo text-xl font-bold">
+          <Link to="/" className="text-white">
             EVENTOME
           </Link>
         </div>
-        <nav className="header-buttons">
+
+        {/* Nawigacja */}
+        <nav className="header-buttons flex gap-2">
+          {isAuthenticated && (
+            <Button
+              onClick={() => navigate("/add-event")}
+              className="bg-green-600 text-white"
+            >
+              Dodaj wydarzenie
+            </Button>
+          )}
+
           {isAuthenticated ? (
             <>
               <Button

@@ -1,5 +1,3 @@
-// src/components/Events/EventsCard.jsx
-
 import { Link } from "react-router-dom";
 import carpetImg from "../../assets/carpet3.jpg";
 
@@ -16,20 +14,24 @@ const EventCard = ({ event }) => {
           className="w-full h-full object-cover"
         />
       </div>
+
       <div className="eventCard-container-text">
         <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
         <p className="text-gray-600 mb-2">
           {eventDate.toLocaleString("pl-PL", {
             dateStyle: "long",
-            timeStyle: "short"
+            timeStyle: "short",
           })}
         </p>
-        <p className="text-gray-700 mb-3 line-clamp-2">{event.description}</p>
+        <p className="eventCard-description text-gray-700 mb-3 line-clamp-2">
+          {event.description}
+        </p>
         <p className="text-sm text-gray-500 mb-4">{event.location}</p>
-        <Link to={`/events/${event.id}`} className="link-details">
-          Szczegóły
-        </Link>
       </div>
+
+      <Link to={`/events/${event.id}`} className="link-details">
+        Szczegóły
+      </Link>
     </div>
   );
 };
