@@ -1,209 +1,210 @@
-// src/pages/AddEventPage.jsx
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import Button from "../components/UI/Button";
 
+/**
+ * Component for adding a new event.
+ * Handles form state, validation, submission, and navigation.
+ */
 const AddEventPage = () => {
   const navigate = useNavigate();
 
-  const initialValues = {
+  const [formData, setFormData] = useState({
     title: "",
     date: "",
     time: "",
     location: "",
     description: "",
-    category: "music",
+    category: "",
     image: null,
-  };
-
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required("Tytuł jest wymagany"),
-    date: Yup.date().required("Data jest wymagana"),
-    time: Yup.string().required("Godzina jest wymagana"),
-    location: Yup.string().required("Miejsce jest wymagane"),
-    description: Yup.string().required("Opis jest wymagany"),
   });
 
-  const handleSubmit = (values) => {
-    console.log("Dodano wydarzenie:", values);
-    navigate("/");
+  // Mapping of category names to their corresponding IDs
+  const categories = {
+    koncert: 1,
+    sport: 2,
+    edukacja: 3,
+    warsztaty: 4,
+    inne: 5,
+  };
+
+  const [errors, setErrors] = useState({});
+
+  /**
+   * Handles changes in form inputs, including file uploads.
+   * @param {Event} e - Input change event
+   */
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "image") {
+      setFormData((prev) => ({ ...prev, image: files[0] }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  /**
+   * Validates form data fields.
+   * Sets error messages for invalid fields.
+   * @returns {boolean} True if form is valid, else false
+   */
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.title) newErrors.title = "Title is required";
+    if (!formData.date) newErrors.date = "Date is required";
+    if (!formData.time) newErrors.time = "Time is required";
+    if (!formData.location) newErrors.location = "Location is required";
+    if (!formData.description) newErrors.description = "Description is required";
+    if (!formData.category) newErrors.category = "Category is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  /**
+   * Handles form submission.
+   * Validates data and sends POST request with form data.
+   * Navigates to homepage on success.
+   * @param {Event} e - Form submit event
+   */
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("date", formData.date);
+    formDataToSend.append("time", formData.time);
+    formDataToSend.append("location", formData.location);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("category_id", categories[formData.category]);
+    if (formData.image) formDataToSend.append("image", formData.image);
+
+    try {
+      const response = await fetch("/routes/api/events.php", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        setErrors({ general: data.error || "Error adding event" });
+        return;
+      }
+
+      navigate("/");
+    } catch (error) {
+      setErrors({ general: "Network or server error." });
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
-        <div className="text-center">
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-            Dodaj nowe wydarzenie
-          </h2>
-        </div>
+    <div className="addEvent-container max-w-md mx-auto mt-10 p-6 border rounded-lg shadow-md bg-white">
+      <h2 className="text-2xl font-semibold text-center mb-6">ADD EVENT</h2>
 
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+      {errors.general && (
+        <p className="text-red-600 mb-4 text-center">{errors.general}</p>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          type="text"
+          name="title"
+          placeholder="Event Title"
+          value={formData.title}
+          onChange={handleChange}
+          className={`w-full px-4 py-2 border rounded-md ${
+            errors.title ? "border-red-600" : "border-gray-300"
+          }`}
+        />
+        {errors.title && <p className="text-red-600 text-sm">{errors.title}</p>}
+
+        <input
+          type="date"
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
+          className={`w-full px-4 py-2 border rounded-md ${
+            errors.date ? "border-red-600" : "border-gray-300"
+          }`}
+        />
+        {errors.date && <p className="text-red-600 text-sm">{errors.date}</p>}
+
+        <input
+          type="time"
+          name="time"
+          value={formData.time}
+          onChange={handleChange}
+          className={`w-full px-4 py-2 border rounded-md ${
+            errors.time ? "border-red-600" : "border-gray-300"
+          }`}
+        />
+        {errors.time && <p className="text-red-600 text-sm">{errors.time}</p>}
+
+        <input
+          type="text"
+          name="location"
+          placeholder="Location"
+          value={formData.location}
+          onChange={handleChange}
+          className={`w-full px-4 py-2 border rounded-md ${
+            errors.location ? "border-red-600" : "border-gray-300"
+          }`}
+        />
+        {errors.location && <p className="text-red-600 text-sm">{errors.location}</p>}
+
+        <select
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          className={`w-full px-4 py-2 border rounded-md ${
+            errors.category ? "border-red-600" : "border-gray-300"
+          }`}
         >
-          {({ isSubmitting, setFieldValue }) => (
-            <Form className="mt-8 space-y-6">
-              <div className="rounded-md shadow-sm space-y-4">
-                <div>
-                  <label
-                    htmlFor="title"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Tytuł wydarzenia
-                  </label>
-                  <Field
-                    name="title"
-                    type="text"
-                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  />
-                  <ErrorMessage
-                    name="title"
-                    component="div"
-                    className="text-red-500 text-sm mt-1"
-                  />
-                </div>
+          <option value="">Select category</option>
+          <option value="koncert">Concert</option>
+          <option value="sport">Sport</option>
+          <option value="edukacja">Education</option>
+          <option value="warsztaty">Workshops</option>
+          <option value="inne">Other</option>
+        </select>
+        {errors.category && <p className="text-red-600 text-sm">{errors.category}</p>}
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label
-                      htmlFor="date"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Data
-                    </label>
-                    <Field
-                      name="date"
-                      type="date"
-                      className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                    />
-                    <ErrorMessage
-                      name="date"
-                      component="div"
-                      className="text-red-500 text-sm mt-1"
-                    />
-                  </div>
+        <textarea
+          name="description"
+          placeholder="Description"
+          rows="4"
+          value={formData.description}
+          onChange={handleChange}
+          className={`w-full px-4 py-2 border rounded-md ${
+            errors.description ? "border-red-600" : "border-gray-300"
+          }`}
+        />
+        {errors.description && (
+          <p className="text-red-600 text-sm">{errors.description}</p>
+        )}
 
-                  <div>
-                    <label
-                      htmlFor="time"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Godzina
-                    </label>
-                    <Field
-                      name="time"
-                      type="time"
-                      className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                    />
-                    <ErrorMessage
-                      name="time"
-                      component="div"
-                      className="text-red-500 text-sm mt-1"
-                    />
-                  </div>
-                </div>
+        <input
+          type="file"
+          name="image"
+          onChange={handleChange}
+          className="w-full text-gray-700"
+        />
 
-                <div>
-                  <label
-                    htmlFor="location"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Miejsce
-                  </label>
-                  <Field
-                    name="location"
-                    type="text"
-                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  />
-                  <ErrorMessage
-                    name="location"
-                    component="div"
-                    className="text-red-500 text-sm mt-1"
-                  />
-                </div>
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+        >
+          Add Event
+        </button>
 
-                <div>
-                  <label
-                    htmlFor="category"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Kategoria
-                  </label>
-                  <Field
-                    as="select"
-                    name="category"
-                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  >
-                    <option value="music">Muzyka</option>
-                    <option value="sport">Sport</option>
-                    <option value="food">Jedzenie</option>
-                    <option value="art">Sztuka</option>
-                    <option value="technology">Technologia</option>
-                  </Field>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="description"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Opis
-                  </label>
-                  <Field
-                    as="textarea"
-                    name="description"
-                    rows="3"
-                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  />
-                  <ErrorMessage
-                    name="description"
-                    component="div"
-                    className="text-red-500 text-sm mt-1"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="image"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Zdjęcie (opcjonalne)
-                  </label>
-                  <input
-                    id="image"
-                    name="image"
-                    type="file"
-                    onChange={(event) => {
-                      setFieldValue("image", event.currentTarget.files[0]);
-                    }}
-                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <Button
-                  type="button"
-                  onClick={() => navigate("/")}
-                  className="bg-gray-500 text-white"
-                >
-                  Anuluj
-                </Button>
-                <Button
-                  type="submit"
-                  className="bg-blue-600 text-white"
-                  disabled={isSubmitting}
-                >
-                  Dodaj wydarzenie
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </div>
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="w-full bg-gray-500 text-white py-2 rounded hover:bg-gray-600"
+        >
+          Cancel
+        </button>
+      </form>
     </div>
   );
 };

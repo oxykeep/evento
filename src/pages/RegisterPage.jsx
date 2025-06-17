@@ -1,14 +1,22 @@
 // src/pages/RegisterPage.jsx
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/UI/Button";
 import Input from "../components/UI/Input";
 import { useAuth } from "../context/AuthContext";
 
+/**
+ * RegisterPage component handles user registration.
+ * It manages form state, validates input,
+ * sends registration request to the server,
+ * and updates auth context on success.
+ */
 const RegisterPage = () => {
   const navigate = useNavigate();
   const { setAuth } = useAuth();
 
+  // State for registration form fields
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,8 +25,14 @@ const RegisterPage = () => {
     confirmPassword: "",
   });
 
+  // State for error messages to display to user
   const [error, setError] = useState("");
 
+  /**
+   * Handles input changes in the registration form.
+   * Updates the corresponding formData field.
+   * @param {object} e - Event object from input change.
+   */
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -26,6 +40,13 @@ const RegisterPage = () => {
     }));
   };
 
+  /**
+   * Handles form submission.
+   * Validates input, sends POST request to register user,
+   * sets auth on success and navigates to home page,
+   * or sets error message on failure.
+   * @param {object} e - Event object from form submission.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -68,7 +89,7 @@ const RegisterPage = () => {
         return;
       }
 
-      // Udana rejestracja — ustaw auth i przekieruj
+      // On successful registration, update auth context and navigate home
       setAuth(data.user);
       navigate("/");
     } catch {

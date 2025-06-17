@@ -1,5 +1,5 @@
 {
-  "proxy": "http://localhost/evento",
+  "proxy": "http://localhost/project_folder",
   "name": "evento",
   "version": "0.1.0",
   "private": true,

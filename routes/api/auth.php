@@ -1,6 +1,4 @@
 <?php
-// routes/api/auth.php
-
 session_start();
 header('Content-Type: application/json');
 
@@ -9,6 +7,13 @@ require_once __DIR__ . '/../../models/User.php';
 
 $userModel = new User($pdo);
 
+/**
+ * Send JSON response with HTTP status code.
+ *
+ * @param array $data Data to encode as JSON.
+ * @param int $code HTTP status code.
+ * @return void
+ */
 function jsonResponse($data, $code = 200) {
     http_response_code($code);
     echo json_encode($data);
@@ -21,6 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
 
     switch ($action) {
+        /**
+         * Handle user login.
+         * Validates email and password, starts session on success.
+         */
         case 'login':
             $email = trim($input['email'] ?? '');
             $password = $input['password'] ?? '';
@@ -31,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $user = $userModel->findByEmail($email);
             if ($user && password_verify($password, $user['password'])) {
-                // Bezpieczne przypisanie danych do sesji
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['name'];
 
@@ -49,6 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             jsonResponse(['status' => 'error', 'message' => 'Nieprawidłowy email lub hasło'], 401);
             break;
 
+        /**
+         * Handle user registration.
+         * Validates inputs and creates new user with hashed password.
+         */
         case 'register':
             $name = trim($input['name'] ?? '');
             $email = trim($input['email'] ?? '');
@@ -98,11 +110,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
     switch ($action) {
+        /**
+         * Return information about the logged-in user.
+         */
         case 'me':
             if (isset($_SESSION['user_id'])) {
                 $user = $userModel->findById($_SESSION['user_id']);
                 if (!$user) {
-                    // Sesja jest ustawiona, ale użytkownik nie istnieje (np. usunięty)
                     $_SESSION = [];
                     session_destroy();
                     jsonResponse(['status' => 'error', 'message' => 'Sesja nieważna'], 401);
@@ -121,13 +135,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             break;
 
+        /**
+         * Log out the current user by destroying session.
+         */
         case 'logout':
-            // Usuń sesję i ciasteczko sesji
             $_SESSION = [];
 
             if (ini_get("session.use_cookies")) {
                 $params = session_get_cookie_params();
-                // Dodatkowo ustaw domain i path z configu, jeśli masz (dopasuj do swojej domeny i ścieżki)
                 setcookie(session_name(), '', time() - 42000,
                     $params["path"], $params["domain"],
                     $params["secure"], $params["httponly"]

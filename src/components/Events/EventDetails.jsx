@@ -1,3 +1,10 @@
+/**
+ * EventDetails component displays detailed information about a single event.
+ *
+ * @param {Object} props
+ * @param {Object|null} props.event - Event data object or null if not found
+ * @returns JSX.Element
+ */
 const EventDetails = ({ event }) => {
   if (!event) {
     return (
@@ -21,7 +28,7 @@ const EventDetails = ({ event }) => {
               <img
                 src={`/uploads/${event.image}`}
                 alt={event.title}
-                className="w-full h-64 object-cover rounded-md"
+                className="eventDetails-main-image"
               />
             ) : (
               <div className="w-full h-64 bg-gray-200 flex items-center justify-center rounded-md">

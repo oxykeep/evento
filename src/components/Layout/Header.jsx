@@ -1,9 +1,13 @@
-// src/components/Layout/Header.jsx
-
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../UI/Button";
 import { useAuth } from "../../context/AuthContext";
 
+/**
+ * Header component displaying the main navigation bar.
+ * Shows different buttons based on user's authentication status.
+ *
+ * @returns JSX.Element
+ */
 const Header = () => {
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuth();
@@ -18,7 +22,7 @@ const Header = () => {
           </Link>
         </div>
 
-        {/* Nawigacja */}
+        {/* Navigation buttons */}
         <nav className="header-buttons flex gap-2">
           {isAuthenticated && (
             <Button

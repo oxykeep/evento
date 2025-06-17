@@ -6,17 +6,28 @@ import Button from "../components/UI/Button";
 import Input from "../components/UI/Input";
 import { useAuth } from "../context/AuthContext";
 
+/**
+ * LoginPage component allows users to log into their account.
+ * Handles form input, validation, and authentication.
+ */
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  // State for storing email and password input values
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
+  // State for storing and displaying error messages
   const [error, setError] = useState("");
 
+  /**
+   * Handles input changes for email and password fields.
+   * Updates the corresponding state value dynamically.
+   * @param {object} e - The event object from the input change.
+   */
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -24,6 +35,13 @@ const LoginPage = () => {
     }));
   };
 
+  /**
+   * Handles form submission, validates input, 
+   * and calls login method from AuthContext.
+   * Navigates to homepage on successful login,
+   * or shows error message on failure.
+   * @param {object} e - The event object from form submission.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -80,15 +98,6 @@ const LoginPage = () => {
           </Button>
         </Link>
       </div>
-
-      {/* Opcjonalnie możesz odkomentować i dodać obsługę odzyskiwania hasła */}
-      {/* 
-      <div className="mt-6 text-center">
-        <Button variant="text" className="text-blue-600">
-          Zapomniałeś hasła?
-        </Button>
-      </div>
-      */}
     </div>
   );
 };

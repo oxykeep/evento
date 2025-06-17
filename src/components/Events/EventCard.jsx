@@ -1,8 +1,19 @@
 import { Link } from "react-router-dom";
 import carpetImg from "../../assets/carpet3.jpg";
 
+/**
+ * EventCard component displays brief information about an event,
+ * including image, title, date/time, description, location, and a link to details.
+ *
+ * @param {Object} props
+ * @param {Object} props.event - Event data object
+ * @returns JSX.Element
+ */
 const EventCard = ({ event }) => {
+  // Parse event date and time into a JavaScript Date object
   const eventDate = new Date(`${event.event_date}T${event.event_time}`);
+
+  // Use event image if available, otherwise fallback to default carpet image
   const imageSrc = event.image ? `/uploads/${event.image}` : carpetImg;
 
   return (

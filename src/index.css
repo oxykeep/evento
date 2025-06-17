@@ -83,6 +83,20 @@ footer {
   text-decoration: underline;
 }
 
+label {
+  color: #2d402a;     
+  font-weight: 600;     
+  margin-right: 0.5em; 
+  display: inline-block;  
+  min-width: 120px;       
+}
+
+.data-value {
+  color: #465938;       
+  font-weight: 400;       
+  display: inline-block;
+}
+
 button {
   transition: all 0.3s ease;
   text-decoration: none;
@@ -226,6 +240,77 @@ button:hover {
   overflow: hidden;
 }
 
+.addEvent-container {
+  margin: 0% auto 0 auto; 
+  padding: 1rem;
+  max-width: 300px; 
+  width: 90%; 
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.addEvent-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.addEvent-container form input,
+.addEvent-container form select,
+.addEvent-container form textarea {
+  width: 100%;       
+  box-sizing: border-box; 
+  transition: all 0.3s ease;
+  color: #fff8ed;
+  padding: 10px 40px;
+  border: 0;
+  border-radius: 8px;
+  border-color: #2d402a;
+  background-color: #465938;
+  font-size: 20px;
+  outline-color: transparent;
+  margin: 0; 
+}
+
+.addEvent-container select {
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  color: #fff8ed;
+  background-color: #465938;
+  border: 1px solid #2d402a;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 10px 15px;
+  height: 45px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  margin: 0;
+
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20viewBox%3D%220%200%204%205%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20fill%3D%22%23fff8ed%22%20d%3D%22M2%205L0%200h4z%22/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  padding-right: 3em;
+}
+
+.addEvent-container select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(45, 64, 42, 0.3);
+  background-color: #465938;
+  color: #fff8ed;
+}
+
+.addEvent-container form input:not(:last-child),
+.addEvent-container form select:not(:last-child),
+.addEvent-container form textarea:not(:last-child) {
+  margin-bottom: 15px;
+}
+
+
 .event-card {
   background-color: white;
   border-radius: 8px;
@@ -239,7 +324,6 @@ button:hover {
 
   height: 150px;
   overflow: hidden;
-  opacity: 50%;
 }
 
 .eventCard-container-text {
@@ -274,7 +358,6 @@ button:hover {
   object-fit: cover;
 }
 
-/* Stylizacja karty profilu */
 .profile-card {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
@@ -286,7 +369,14 @@ button:hover {
 
 .eventDetails-container-main-image {
   display: flex;
-  justify-content: center;
+  width: 1200px;
+  border-radius: 8px;
+  justify-content: flex-start;
+}
+
+.eventDetails-main-image {
+  max-width: 600px;
+  border-radius: 8px;
 }
 
 .eventDetails-container {
@@ -309,3 +399,73 @@ span {
   justify-content: center;
   align-self: center;
 }
+
+.flex-form {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 1rem; 
+  max-width: 100%;
+  overflow-x: visible;
+}
+
+.flex-form > div {
+  flex: 0 0 200px; 
+}
+
+.flex-form input,
+.flex-form select {
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: #fff8ed;
+  background-color: #465938;
+  border: 1px solid #2d402a;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 10px 15px;
+  height: 45px;
+  width: 100%; /* dopasowuje się do 180px z rodzica */
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  margin: 0;
+}
+
+.flex-form select {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20viewBox%3D%220%200%204%205%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20fill%3D%22%23fff8ed%22%20d%3D%22M2%205L0%200h4z%22/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  padding-right: 3em;
+}
+
+.flex-form button {
+  flex: 0 0 120px; /* przycisk trochę węższy */
+  height: 45px;
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.flex-form button:hover {
+  background-color: #2d402a;
+}
+
+.flex-form input:hover,
+.flex-form select:hover {
+  background-color: #2d402a;
+  color: #fff8ed;
+}
+
+.flex-form input:focus,
+.flex-form select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(45, 64, 42, 0.3); /* zielony pierścień */
+  background-color: #465938; /* zachowujemy oryginalne tło */
+  color: #fff8ed;
+}
+

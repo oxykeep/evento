@@ -2,22 +2,28 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
 
-// the main layout wrapper for all pages
-// keeps consistent header and footer while swapping page content
+/**
+ * Main layout component that wraps all pages.
+ * Maintains a consistent header and footer while swapping page content.
+ *
+ * @param {object} props - Component props.
+ * @param {React.ReactNode} props.children - Optional children elements.
+ * @returns JSX.Element
+ */
 const Layout = ({ children }) => {
   return (
-    // full height container with flex column layout
+    // Full height container with flex column layout
     <div className="min-h-screen flex flex-col">
-      {/* header appears at the top of every page */}
+      {/* Header appears at the top of every page */}
       <Header />
 
-      {/* main content area that grows to fill available space */}
+      {/* Main content area that grows to fill available space */}
       <main className="flex-grow container mx-auto px-4 py-8">
-        {/* outlet renders the current route's content */}
+        {/* Outlet renders the current route's content */}
         <Outlet />
       </main>
 
-      {/* footer appears at the bottom of every page */}
+      {/* Footer appears at the bottom of every page */}
       <Footer />
     </div>
   );

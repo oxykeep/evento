@@ -1,4 +1,4 @@
--- Zakładamy, że baza `eventdb` już istnieje.
+-- eventhub_db
 
 -- USERS
 CREATE TABLE IF NOT EXISTS users (
@@ -32,28 +32,6 @@ CREATE TABLE IF NOT EXISTS events (
     FOREIGN KEY (organizer_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- COMMENTS
-CREATE TABLE IF NOT EXISTS comments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    event_id INT NOT NULL,
-    user_id INT NOT NULL,
-    comment TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- PARTICIPANTS
-CREATE TABLE IF NOT EXISTS participants (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    event_id INT NOT NULL,
-    user_id INT NOT NULL,
-    joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(event_id, user_id),
-    FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 -- CATEGORIES (default)
 INSERT IGNORE INTO categories (name) VALUES
 ('Koncert'), ('Sport'), ('Edukacja'), ('Warsztaty'), ('Inne');
@@ -78,27 +56,3 @@ INSERT INTO events (title, description, location, event_date, event_time, catego
 ('Gra terenowa', 'Zabawa i rywalizacja dla rodzin', 'Wrocław, Las Osobowicki', '2025-09-10', '12:00:00', 5, 3, NULL),
 ('Koncert rockowy', 'Najlepsze zespoły z Polski', 'Katowice, Spodek', '2025-10-05', '19:00:00', 1, 4, 'rock.jpg'),
 ('Zlot food trucków', 'Pyszne jedzenie z całego świata', 'Poznań, Stary Rynek', '2025-07-30', '13:00:00', 5, 5, 'food.jpg');
-
--- COMMENTS
-INSERT INTO comments (event_id, user_id, comment) VALUES
-(1, 2, 'Nie mogę się doczekać!'),
-(2, 3, 'Zapisuję się już dziś!'),
-(3, 4, 'Super inicjatywa.'),
-(4, 5, 'Będę z dziećmi.'),
-(1, 3, 'Brzmi ekstra!');
-
--- PARTICIPANTS
-INSERT INTO participants (event_id, user_id) VALUES
-(1, 2),
-(1, 3),
-(2, 4),
-(2, 5),
-(3, 2),
-(4, 1),
-(5, 1),
-(5, 2),
-(6, 3),
-(7, 4),
-(8, 5);
-
-ALTER TABLE users AUTO_INCREMENT = 6;

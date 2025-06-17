@@ -1,6 +1,12 @@
 import EventCard from "./EventCard";
 
-// shows a list of events or a message if there aren't any
+/**
+ * EventsList component displays a list of event cards or a message when no events are available.
+ *
+ * @param {Object} props
+ * @param {Array} props.events - Array of event objects to display
+ * @returns JSX.Element
+ */
 const EventsList = ({ events }) => {
   if (!events || events.length === 0) {
     return (
